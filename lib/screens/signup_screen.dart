@@ -28,6 +28,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
     confirmPasswordController.dispose();
     super.dispose();
   }
+  void login() async{
+    setState(() {
+      loading=true;
+    });
+    try {
+      await _auth
+          .createUserWithEmailAndPassword(
+          email: emailController.text.toString(),
+          password: passwordController.text.toString()).then((value)
+      {
+        setState(() {
+          loading=false;
+        });
+      }).onError((error, stackTrace) {
+        Utils().toastMessage(error.toString());
+        setState(() {
+          loading=false;
+        });
+      },);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('User registered successfully')),
+      );
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => LoginScreen()),
+      // );
+      //Todo make this navigator such that if success then navigates back to login screen else remains on signup just add flag if else
+    }
+    catch(e){
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,38 +207,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               child: ElevatedButton(
                                 onPressed: () async {
                                   if (_formKey.currentState!.validate()) {
-                                    setState(() {
-                                      loading=true;
-                                    });
-                                     try {
-                                       await _auth
-                                           .createUserWithEmailAndPassword(
-                                           email: emailController.text.toString(),
-                                           password: passwordController.text.toString()).then((value)
-                                       {
-                                         setState(() {
-                                           loading=false;
-                                         });
-                                       }).onError((error, stackTrace) {
-                                         Utils().toastMessage(error.toString());
-                                         setState(() {
-                                           loading=false;
-                                         });
-                                       },);
-                                       ScaffoldMessenger.of(context).showSnackBar(
-                                         SnackBar(content: Text('User registered successfully')),
-                                       );
-                                       // Navigator.pushReplacement(
-                                       //   context,
-                                       //   MaterialPageRoute(builder: (context) => LoginScreen()),
-                                       // );
-                                       //Todo make this navigator such that if success then navigates back to login screen else remains on signup just add flag if else
-                                     }
-                                     catch(e){
-                                       ScaffoldMessenger.of(context).showSnackBar(
-                                           SnackBar(content: Text(e.toString())),
-                                       );
-                                     }
+                                    login();
 
                                   }
                                 },
@@ -226,6 +229,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                                 child: Center(
                                   child:loading? CircularProgressIndicator(
+                                    strokeWidth: 3,
                                     valueColor:AlwaysStoppedAnimation<Color>(Colors.white) ,):
                                   Text('Sign Up'),),
                               ),

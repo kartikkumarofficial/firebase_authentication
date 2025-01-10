@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_authentication/screens/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_authentication/widgets/utils.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -225,7 +224,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   ),
                                   elevation: 5,
                                 ),
-                                child: Text('Sign Up'),
+                                child: Center(
+                                  child:loading? CircularProgressIndicator(
+                                    valueColor:AlwaysStoppedAnimation<Color>(Colors.white) ,):
+                                  Text('Sign Up'),),
                               ),
                             ),
                             SizedBox(height: srcheight * 0.03),
@@ -241,7 +243,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(),));
+                                    Navigator.push
+                                      (context, MaterialPageRoute
+                                      (builder: (context) => LoginScreen(),));
                                   },
                                   child: Text(
                                     'Login',

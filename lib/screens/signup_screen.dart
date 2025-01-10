@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_authentication/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_authentication/widgets/utils.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -17,6 +18,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
+  bool loading = false;
 
   FirebaseAuth _auth = FirebaseAuth.instance ;
 
@@ -93,34 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               key: _formKey,
                               child: Column(
                                 children: [
-                                  TextFormField(
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return "Name is required";
-                                      }
-                                      return null;
-                                    },
-                                    controller: emailController,
-                                    decoration: InputDecoration(
-                                      labelText: 'Name',
-                                      hintText: 'Enter your Name',
-                                      prefixIcon: const Icon(Icons.person_outline,size: 25,),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(srcwidth * 0.04),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(srcwidth * 0.04),
-                                        borderSide: const BorderSide(
-                                          color: Colors.blueAccent,
-                                          width: 2,
-                                        ),
-                                      ),
-                                      filled: true,
-                                      fillColor: Colors.grey[100],
-                                    ),
-                                    keyboardType: TextInputType.emailAddress,
-                                  ),
-                                  SizedBox(height: srcheight * 0.02),
+
                                   TextFormField(
                                     validator: (value) {
                                       if (value!.isEmpty) {
@@ -189,47 +164,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     obscureText: !_isPasswordVisible,
                                   ),
                                   SizedBox(height: srcheight * 0.02),
-                                  TextFormField(
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return "Confirm password is required";
-                                      } else if (value != passwordController.text) {
-                                        return "Passwords do not match";
-                                      }
-                                      return null;
-                                    },
-                                    controller: confirmPasswordController,
-                                    decoration: InputDecoration(
-                                      labelText: 'Confirm Password',
-                                      hintText: 'Re-enter your password',
-                                      prefixIcon: const Icon(Icons.lock_outline),
-                                      suffixIcon: IconButton(
-                                        icon: Icon(
-                                          _isConfirmPasswordVisible
-                                              ? Icons.visibility
-                                              : Icons.visibility_off,
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
-                                          });
-                                        },
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(srcwidth * 0.04),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(srcwidth * 0.04),
-                                        borderSide: const BorderSide(
-                                          color: Colors.blueAccent,
-                                          width: 2,
-                                        ),
-                                      ),
-                                      filled: true,
-                                      fillColor: Colors.grey[100],
-                                    ),
-                                    obscureText: !_isConfirmPasswordVisible,
-                                  ),
                                 ],
                               ),
                             ),
@@ -238,11 +172,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             Container(
                               width: srcwidth*0.7,
                               child: ElevatedButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   if (_formKey.currentState!.validate()) {
-                                    _auth.createUserWithEmailAndPassword(
-                                        email: emailController.text.toString(),
-                                        password: passwordController.text.toString());
+                                    setState(() {
+                                      loading=true;
+                                    });
+                                     try {
+                                       await _auth
+                                           .createUserWithEmailAndPassword(
+                                           email: emailController.text.toString(),
+                                           password: passwordController.text.toString()).then((value)
+                                       {
+                                         setState(() {
+                                           loading=false;
+                                         });
+                                       }).onError((error, stackTrace) {
+                                         Utils().toastMessage(error.toString());
+                                         setState(() {
+                                           loading=false;
+                                         });
+                                       },);
+                                       ScaffoldMessenger.of(context).showSnackBar(
+                                         SnackBar(content: Text('User registered successfully')),
+                                       );
+                                       // Navigator.pushReplacement(
+                                       //   context,
+                                       //   MaterialPageRoute(builder: (context) => LoginScreen()),
+                                       // );
+                                       //Todo make this navigator such that if success then navigates back to login screen else remains on signup just add flag if else
+                                     }
+                                     catch(e){
+                                       ScaffoldMessenger.of(context).showSnackBar(
+                                           SnackBar(content: Text(e.toString())),
+                                       );
+                                     }
 
                                   }
                                 },

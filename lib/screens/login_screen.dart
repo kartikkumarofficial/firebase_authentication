@@ -9,6 +9,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen>{
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   bool _isPasswordVisible = false;
 
@@ -185,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen>{
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    // Handle signup
+
                                   },
                                   child: Text(
                                     'Sign Up',

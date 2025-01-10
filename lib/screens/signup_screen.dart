@@ -92,6 +92,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   TextFormField(
                                     validator: (value) {
                                       if (value!.isEmpty) {
+                                        return "Name is required";
+                                      }
+                                      return null;
+                                    },
+                                    controller: emailController,
+                                    decoration: InputDecoration(
+                                      labelText: 'Name',
+                                      hintText: 'Enter your Name',
+                                      prefixIcon: const Icon(Icons.person_outline,size: 25,),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(srcwidth * 0.04),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(srcwidth * 0.04),
+                                        borderSide: const BorderSide(
+                                          color: Colors.blueAccent,
+                                          width: 2,
+                                        ),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.grey[100],
+                                    ),
+                                    keyboardType: TextInputType.emailAddress,
+                                  ),
+                                  SizedBox(height: srcheight * 0.02),
+                                  TextFormField(
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
                                         return "Email is required";
                                       }
                                       return null;
@@ -203,29 +231,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             SizedBox(height: srcheight * 0.01),
                             SizedBox(height: srcheight * 0.03),
-                            ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  // Handle sign up logic
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF6A11CB),
-                                foregroundColor: Colors.white,
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: srcwidth * 0.3,
-                                  vertical: srcheight * 0.02,
+                            Container(
+                              width: srcwidth*0.7,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    // Handle sign up logic
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF6A11CB),
+                                  foregroundColor: Colors.white,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: srcwidth * 0.2,
+                                    vertical: srcheight * 0.02,
+                                  ),
+                                  textStyle: TextStyle(
+                                    fontSize: textScaleFactor * 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(srcwidth * 0.04),
+                                  ),
+                                  elevation: 5,
                                 ),
-                                textStyle: TextStyle(
-                                  fontSize: textScaleFactor * 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(srcwidth * 0.04),
-                                ),
-                                elevation: 5,
+                                child: Text('Sign Up'),
                               ),
-                              child: Text('Sign Up'),
                             ),
                             SizedBox(height: srcheight * 0.03),
                             Row(

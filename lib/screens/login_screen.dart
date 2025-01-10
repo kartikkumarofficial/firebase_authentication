@@ -14,6 +14,13 @@ class _LoginScreenState extends State<LoginScreen>{
 
   bool _isPasswordVisible = false;
 
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {

@@ -11,7 +11,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen>{
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
+  final _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
 
   @override
@@ -83,63 +83,86 @@ class _LoginScreenState extends State<LoginScreen>{
                               ),
                             ),
                             SizedBox(height: srcheight * 0.05),
-                            TextFormField(
-                              decoration: InputDecoration(
-                                labelText: 'Email',
-                                hintText: 'Enter your email',
-                                prefixIcon: const Icon(Icons.email_outlined),
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                  BorderRadius.circular(srcwidth * 0.04),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                  BorderRadius.circular(srcwidth * 0.04),
-                                  borderSide: const BorderSide(
-                                    color: Colors.blueAccent,
-                                    width: 2,
-                                  ),
-                                ),
-                                filled: true,
-                                fillColor: Colors.grey[100],
-                              ),
-                              keyboardType: TextInputType.emailAddress,
-                            ),
-                            SizedBox(height: srcheight * 0.02),
-                            TextFormField(
-                              decoration: InputDecoration(
-                                labelText: 'Password',
-                                hintText: 'Enter your password',
-                                prefixIcon: const Icon(Icons.lock_outline),
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                    _isPasswordVisible
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      _isPasswordVisible = !_isPasswordVisible;
-                                    });
-                                  },
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                  BorderRadius.circular(srcwidth * 0.04),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                  BorderRadius.circular(srcwidth * 0.04),
-                                  borderSide: const BorderSide(
-                                    color: Colors.blueAccent,
-                                    width: 2,
-                                  ),
-                                ),
-                                filled: true,
-                                fillColor: Colors.grey[100],
-                              ),
-                              obscureText: !_isPasswordVisible,
-                            ),
+                            Form(
+                              key: _formKey,
+                                child:Column(
+                                  children: [
+                                    TextFormField(
+                                      validator: (value){
+                                        if(value!.isEmpty){
+                                          return "Email is required";
+                                        }
+                                        return null;
+                                      },
+                                      controller: emailController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Email',
+                                        hintText: 'Enter your email',
+                                        prefixIcon: const Icon(Icons.email_outlined),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(srcwidth * 0.04),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(srcwidth * 0.04),
+                                          borderSide: const BorderSide(
+                                            color: Colors.blueAccent,
+                                            width: 2,
+                                          ),
+                                        ),
+                                        filled: true,
+                                        fillColor: Colors.grey[100],
+                                      ),
+                                      keyboardType: TextInputType.emailAddress,
+                                    ),
+                                    SizedBox(height: srcheight * 0.02),
+                                    TextFormField(
+                                      validator: (value){
+                                        if(value!.isEmpty){
+                                          return "Password is required";
+                                        }
+                                        return null;
+                                      },
+                                      controller: passwordController ,
+                                      decoration: InputDecoration(
+                                        labelText: 'Password',
+                                        hintText: 'Enter your password',
+                                        prefixIcon: const Icon(Icons.lock_outline),
+                                        suffixIcon: IconButton(
+                                          icon: Icon(
+                                            _isPasswordVisible
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              _isPasswordVisible = !_isPasswordVisible;
+                                            });
+                                          },
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(srcwidth * 0.04),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(srcwidth * 0.04),
+                                          borderSide: const BorderSide(
+                                            color: Colors.blueAccent,
+                                            width: 2,
+                                          ),
+                                        ),
+                                        filled: true,
+                                        fillColor: Colors.grey[100],
+                                      ),
+                                      obscureText: !_isPasswordVisible,
+                                    ),
+
+                                  ],
+                                ) ),
+
+
                             SizedBox(height: srcheight * 0.01),
                             Align(
                               alignment: Alignment.centerRight,
@@ -160,7 +183,16 @@ class _LoginScreenState extends State<LoginScreen>{
                             SizedBox(height: srcheight * 0.03),
                             ElevatedButton(
                               onPressed: () {
-                                // Handle login
+                                if(_formKey.currentState!.validate()) {
+                                  validator:
+                                      (value) {
+                                    if (value!.isEmpty) {
+                                      return "Don't leave the field empty";
+                                    }
+                                    return null;
+                                  };
+
+                              }
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF6A11CB),

@@ -247,11 +247,6 @@ class _LoginScreenState extends State<LoginScreen>{
                   ),
                 ),
               ),
-              SizedBox(height: srcheight * 0.01),
-              Container(
-                height: srcheight * 0.1,
-                child: Text('Email: eve.holt@reqres.in \n  Password: cityslicka'),
-              )
             ],
           ),
         ),

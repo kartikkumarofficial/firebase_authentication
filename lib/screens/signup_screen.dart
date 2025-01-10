@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_authentication/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -15,6 +17,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
+
+  FirebaseAuth _auth = FirebaseAuth.instance ;
 
   @override
   void dispose() {
@@ -236,7 +240,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
-                                    // Handle sign up logic
+                                    _auth.createUserWithEmailAndPassword(
+                                        email: emailController.text.toString(),
+                                        password: passwordController.text.toString());
+
                                   }
                                 },
                                 style: ElevatedButton.styleFrom(

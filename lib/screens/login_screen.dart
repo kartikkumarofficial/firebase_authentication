@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({super.key});
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _LoginScreenState extends State<LoginScreen>{
 
   bool _isPasswordVisible = false;
 

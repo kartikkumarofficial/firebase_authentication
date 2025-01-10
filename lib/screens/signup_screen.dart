@@ -207,7 +207,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               child: ElevatedButton(
                                 onPressed: () async {
                                   if (_formKey.currentState!.validate()) {
-                                    login();
+                                    login();//defined above
 
                                   }
                                 },

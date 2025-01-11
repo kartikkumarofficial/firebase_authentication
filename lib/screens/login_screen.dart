@@ -2,7 +2,7 @@ import 'package:firebase_authentication/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:get/utils.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,8 +26,10 @@ class _LoginScreenState extends State<LoginScreen>{
   }
   void login(){
     _auth.signInWithEmailAndPassword(
-        email: email, 
-        password: password).then((value) => ,)
+        email: emailController.text.toString(),
+        password: passwordController.text.toString()).then((value) {
+          
+        },) ,)
   }
 
 

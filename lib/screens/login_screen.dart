@@ -1,6 +1,7 @@
 import 'package:firebase_authentication/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -15,12 +16,18 @@ class _LoginScreenState extends State<LoginScreen>{
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
+  final _auth = FirebaseAuth.instance ;
 
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
+  }
+  void login(){
+    _auth.signInWithEmailAndPassword(
+        email: email, 
+        password: password).then((value) => ,)
   }
 
 

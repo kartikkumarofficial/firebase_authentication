@@ -1,8 +1,11 @@
+import 'package:firebase_authentication/screens/home_screen.dart';
 import 'package:firebase_authentication/screens/signup_screen.dart';
+import 'package:firebase_authentication/widgets/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/utils.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,6 +15,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen>{
+  bool loading = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -25,11 +29,27 @@ class _LoginScreenState extends State<LoginScreen>{
     super.dispose();
   }
   void login(){
+    setState(() {
+      loading=true;
+
+    });
     _auth.signInWithEmailAndPassword(
         email: emailController.text.toString(),
         password: passwordController.text.toString()).then((value) {
-          
-        },) ,)
+      Utils().toastMessage(value.user!.email.toString());
+      Navigator.push(context,MaterialPageRoute(builder: (context) => HomeScreen(),));
+      setState(() {
+        loading=false;
+
+      });
+      
+        },).onError((error,stackTrace){
+      Utils().toastMessage(error.toString());
+      setState(() {
+        loading=false;
+
+      });
+    });
   }
 
 
@@ -51,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen>{
             width: srcwidth,
             height: srcheight,
 
-            decoration: const BoxDecoration(
+            decoration:  BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -229,7 +249,7 @@ class _LoginScreenState extends State<LoginScreen>{
                                   ),
                                   elevation: 5,
                                 ),
-                                child: Text('Login'),
+                                child:loading? CircularProgressIndicator(strokeWidth: 3,color: Colors.white,):Text('Login')  ,
                               ),
                               SizedBox(height: srcheight * 0.03),
                               Row(

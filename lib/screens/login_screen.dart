@@ -28,20 +28,22 @@ class _LoginScreenState extends State<LoginScreen>{
     passwordController.dispose();
     super.dispose();
   }
-  void login(){
+  void login() async{
     setState(() {
       loading=true;
 
     });
-    _auth.signInWithEmailAndPassword(
+    try{
+    await _auth.signInWithEmailAndPassword(
         email: emailController.text.toString(),
         password: passwordController.text.toString()).then((value) {
-      Utils().toastMessage(value.user!.email.toString());
-      Navigator.push(context,MaterialPageRoute(builder: (context) => HomeScreen(),));
+      Utils().gtoastMessage("Welcome ${value.user!.email.toString()}");
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HomeScreen(),));
       setState(() {
-        loading=false;
-
+        loading = false;
       });
+
       
         },).onError((error,stackTrace){
       Utils().toastMessage(error.toString());
@@ -50,7 +52,10 @@ class _LoginScreenState extends State<LoginScreen>{
 
       });
     });
-  }
+    }catch(e){
+      Fluttertoast.showToast(msg: e.toString());
+    }}
+
 
 
   @override
@@ -220,18 +225,8 @@ class _LoginScreenState extends State<LoginScreen>{
                               ),
                               SizedBox(height: srcheight * 0.03),
                               ElevatedButton(
-                                onPressed: () {
-                                  if(_formKey.currentState!.validate()) {
-                                    validator:
-                                        (value) {
-                                      if (value!.isEmpty) {
-                                        return "Don't leave the field empty";
-                                      }
-                                      return null;
-                                    };
 
-                                }
-                                },
+                                onPressed: loading?null:login,
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFF6A11CB),
                                   foregroundColor: Colors.white,
@@ -279,6 +274,29 @@ class _LoginScreenState extends State<LoginScreen>{
                                 ],
                               ),
                               SizedBox(height: srcheight * 0.01),
+
+
+
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: (){
+                                      Utils().toastMessage('message');
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()),);
+                                    },
+                                    child: Text(
+                                       "Try other ways",
+                                      style: TextStyle(
+                                        color: const Color(0xFF6A11CB),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: textScaleFactor * 14,
+                                      ),
+                                    ),
+                                  ),
+
+                                ],
+                              ),
                             ],
                           ),
                         ),
@@ -294,3 +312,51 @@ class _LoginScreenState extends State<LoginScreen>{
     );
   }
 }
+
+
+
+void _showBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+    ),
+    builder: (BuildContext context) {
+      return Container(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "Select an Option",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 16),
+            ListTile(
+              leading: Icon(Icons.phone),
+              title: Text("Login with Phone Number"),
+              onTap: () {
+                Navigator.pop(context); // Close the bottom sheet
+                // Handle phone login logic here
+                print("Login with Phone Number selected");
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.g_mobiledata),
+              title: Text("Continue with Google"),
+              onTap: () {
+                Navigator.pop(context); // Close the bottom sheet
+                // Handle Google login logic here
+                print("Continue with Google selected");
+              },
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+

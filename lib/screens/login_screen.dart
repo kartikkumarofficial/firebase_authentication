@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/utils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_authentication/widgets/bottomsheet_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -283,7 +284,8 @@ class _LoginScreenState extends State<LoginScreen>{
                                   GestureDetector(
                                     onTap: (){
                                       Utils().toastMessage('message');
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()),);
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()),);
+                                      _showBottomSheet(context);
                                     },
                                     child: Text(
                                        "Try other ways",
@@ -315,48 +317,5 @@ class _LoginScreenState extends State<LoginScreen>{
 
 
 
-void _showBottomSheet(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-    ),
-    builder: (BuildContext context) {
-      return Container(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              "Select an Option",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 16),
-            ListTile(
-              leading: Icon(Icons.phone),
-              title: Text("Login with Phone Number"),
-              onTap: () {
-                Navigator.pop(context); // Close the bottom sheet
-                // Handle phone login logic here
-                print("Login with Phone Number selected");
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.g_mobiledata),
-              title: Text("Continue with Google"),
-              onTap: () {
-                Navigator.pop(context); // Close the bottom sheet
-                // Handle Google login logic here
-                print("Continue with Google selected");
-              },
-            ),
-          ],
-        ),
-      );
-    },
-  );
-}
+
 

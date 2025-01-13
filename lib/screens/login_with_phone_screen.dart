@@ -91,11 +91,19 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                       ),
                       SizedBox(height: srcheight * 0.03),
                       ElevatedButton(
+
                         onPressed: () {
+                          setState(() {
+                            bool loading =true;
+                          });
                           // final phoneNumber = phoneNumberController.text.trim();
                           auth.verifyPhoneNumber(
                               phoneNumber: phoneNumberController.text.trim(),
-                              verificationCompleted: (_){},
+                              verificationCompleted: (_){
+                                setState(() {
+                                  bool loading =false;
+                                });
+                              },
                               verificationFailed: (e){
                                 Utils().toastMessage(e.toString());
                               },

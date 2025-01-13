@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class OtpScreen extends StatefulWidget {
   final String phoneNumber;
-  String verificationId;
+  // String verificationId;
 
   OtpScreen({super.key, required this.phoneNumber});
 

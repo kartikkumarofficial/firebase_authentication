@@ -99,11 +99,15 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                               verificationFailed: (e){
                                 Utils().toastMessage(e.toString());
                               },
-                              codeSent: (String verificationId, int? token){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => OtpScreen(phoneNumber: phoneNumberController.text.trim()),));
+                              codeSent: (String phoneNumber, int? token){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                                    OtpScreen(
+                                        phoneNumber: phoneNumberController.text.trim()),));
 
                               },
-                              codeAutoRetrievalTimeout: null);
+                              codeAutoRetrievalTimeout:(e){
+                                Utils().toastMessage(e.toString());
+                              } );
 
 
 

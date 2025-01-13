@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'login_with_phone_screen.dart';
+import 'login_screen.dart';
 
 class OtpScreen extends StatefulWidget {
   final String phoneNumber;
@@ -95,7 +98,14 @@ class _OtpScreenState extends State<OtpScreen> {
                       SizedBox(height: srcheight * 0.03),
                       ElevatedButton(
                         onPressed: () {
+                          //todo create a final credential
+
                           final otp = otpController.text.trim();
+                          // final credential=PhoneAuthProvider().credential(
+                          //     verificationId: widget.phoneNumber,
+                            // smsCode:widget.phoneNumberController.text.trim()
+                          // );
+
                           if (otp.isNotEmpty && otp.length == 6) {
                             // Handle OTP verification logic
                             ScaffoldMessenger.of(context).showSnackBar(

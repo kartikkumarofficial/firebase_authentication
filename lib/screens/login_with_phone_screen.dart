@@ -132,7 +132,10 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                       ),
                       SizedBox(height: srcheight * 0.03),
                       ElevatedButton(
-                        onPressed: loading ? null : verifyPhoneNumber,
+                        onPressed: (){
+                          Utils().toastMessage("Internet billing not enabled so can't login with otp");
+                        },
+                        // onPressed: loading ? null : verifyPhoneNumber,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF6A11CB),
                           foregroundColor: Colors.white,

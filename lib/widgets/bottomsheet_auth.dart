@@ -1,3 +1,5 @@
+import 'package:firebase_authentication/screens/home_screen.dart';
+import 'package:firebase_authentication/screens/login_with_phone_screen.dart';
 import 'package:flutter/material.dart';
 
 class BottomSheetOpener {
@@ -25,7 +27,7 @@ class BottomSheetOpener {
                 leading: Icon(Icons.phone),
                 title: Text("Login with Phone Number"),
                 onTap: () {
-                  Navigator.pop(context); // Close the bottom sheet
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => PhoneNumberScreen()));
                   print("Login with Phone Number selected");
                 },
               ),

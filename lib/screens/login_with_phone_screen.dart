@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'otp_screen.dart';
 
@@ -5,6 +6,9 @@ import 'package:flutter/material.dart';
 
 class PhoneNumberScreen extends StatelessWidget {
   final TextEditingController phoneNumberController = TextEditingController();
+  bool loading = false;
+  final auth = FirebaseAuth.instance;
+
 
   PhoneNumberScreen({super.key});
 

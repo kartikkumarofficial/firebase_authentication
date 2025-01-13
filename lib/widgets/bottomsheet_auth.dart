@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BottomSheet {
+class BottomSheetOpener {
   void showBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,

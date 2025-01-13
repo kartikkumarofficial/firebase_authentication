@@ -285,7 +285,8 @@ class _LoginScreenState extends State<LoginScreen>{
                                     onTap: (){
                                       Utils().toastMessage('message');
                                       // Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()),);
-                                      _showBottomSheet(context);
+
+                                      BottomSheetOpener();
                                     },
                                     child: Text(
                                        "Try other ways",

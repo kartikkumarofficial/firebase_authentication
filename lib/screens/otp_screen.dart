@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 
-class OtpScreen extends StatelessWidget {
+class OtpScreen extends StatefulWidget {
   final String phoneNumber;
-  final TextEditingController otpController = TextEditingController();
+  String verificationId;
 
   OtpScreen({super.key, required this.phoneNumber});
+
+  @override
+  State<OtpScreen> createState() => _OtpScreenState();
+}
+
+class _OtpScreenState extends State<OtpScreen> {
+  final TextEditingController otpController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     var srcheight = MediaQuery.of(context).size.height;
     var srcwidth = MediaQuery.of(context).size.width;
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
+
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -53,7 +61,7 @@ class OtpScreen extends StatelessWidget {
                       ),
                       SizedBox(height: srcheight * 0.02),
                       Text(
-                        'We have sent an OTP to $phoneNumber',
+                        'We have sent an OTP to ${widget.phoneNumber}',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: textScaleFactor * 16,

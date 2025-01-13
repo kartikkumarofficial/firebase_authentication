@@ -1,16 +1,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_authentication/widgets/utils.dart';
 import 'package:flutter/material.dart';
 import 'otp_screen.dart';
 
 import 'package:flutter/material.dart';
 
-class PhoneNumberScreen extends StatelessWidget {
-  final TextEditingController phoneNumberController = TextEditingController();
-  bool loading = false;
-  final auth = FirebaseAuth.instance;
-
+class PhoneNumberScreen extends StatefulWidget {
 
   PhoneNumberScreen({super.key});
+
+  @override
+  State<PhoneNumberScreen> createState() => _PhoneNumberScreenState();
+}
+
+class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
+  final TextEditingController phoneNumberController = TextEditingController();
+  // final String phoneNumber;
+  bool loading = false;
+
+  final auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +92,23 @@ class PhoneNumberScreen extends StatelessWidget {
                       SizedBox(height: srcheight * 0.03),
                       ElevatedButton(
                         onPressed: () {
-                          final phoneNumber = phoneNumberController.text.trim();
+                          // final phoneNumber = phoneNumberController.text.trim();
+                          auth.verifyPhoneNumber(
+                              phoneNumber: phoneNumberController.text.trim(),
+                              verificationCompleted: (_){},
+                              verificationFailed: (e){
+                                Utils().toastMessage(e.toString());
+                              },
+                              codeSent: (String verificationId, int? token){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => OtpScreen(phoneNumber: phoneNumberController.text.trim()),));
+
+                              },
+                              codeAutoRetrievalTimeout: null);
+
+
+
+
+
                           if (phoneNumber.isNotEmpty) {
                             Navigator.push(
                               context,

@@ -3,11 +3,8 @@ import 'package:firebase_authentication/widgets/utils.dart';
 import 'package:flutter/material.dart';
 import 'otp_screen.dart';
 
-import 'package:flutter/material.dart';
-
 class PhoneNumberScreen extends StatefulWidget {
-
-  PhoneNumberScreen({super.key});
+  const PhoneNumberScreen({super.key});
 
   @override
   State<PhoneNumberScreen> createState() => _PhoneNumberScreenState();
@@ -15,10 +12,53 @@ class PhoneNumberScreen extends StatefulWidget {
 
 class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
   final TextEditingController phoneNumberController = TextEditingController();
-  // final String phoneNumber;
   bool loading = false;
-
   final auth = FirebaseAuth.instance;
+
+  void verifyPhoneNumber() {
+    final phoneNumber = phoneNumberController.text.trim();
+
+    if (phoneNumber.isEmpty) {
+      Utils().toastMessage("Please enter a valid phone number.");
+      return;
+    }
+
+    setState(() {
+      loading = true;
+    });
+
+    auth.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      verificationCompleted: (_) {
+        setState(() {
+          loading = false;
+        });
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        Utils().toastMessage(e.message ?? "Verification failed.");
+        setState(() {
+          loading = false;
+        });
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        setState(() {
+          loading = false;
+        });
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OtpScreen(phoneNumber: phoneNumber),
+          ),
+        );
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        Utils().toastMessage("Code auto-retrieval timeout.");
+        setState(() {
+          loading = false;
+        });
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +108,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                       SizedBox(height: srcheight * 0.02),
                       Form(
                         child: TextFormField(
+
                           controller: phoneNumberController,
                           decoration: InputDecoration(
                             labelText: 'Phone Number',
@@ -91,51 +132,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                       ),
                       SizedBox(height: srcheight * 0.03),
                       ElevatedButton(
-
-                        onPressed: () {
-                          setState(() {
-                            bool loading =true;
-                          });
-                          // final phoneNumber = phoneNumberController.text.trim();
-                          auth.verifyPhoneNumber(
-                              phoneNumber: phoneNumberController.text.trim(),
-                              verificationCompleted: (_){
-                                setState(() {
-                                  bool loading =false;
-                                });
-                              },
-                              verificationFailed: (e){
-                                Utils().toastMessage(e.toString());
-                              },
-                              codeSent: (String phoneNumber, int? token){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                                    OtpScreen(
-                                        phoneNumber: phoneNumberController.text.trim()),));
-
-                              },
-                              codeAutoRetrievalTimeout:(e){
-                                Utils().toastMessage(e.toString());
-                              } );
-
-
-
-
-
-                          if (phoneNumber.isNotEmpty) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => OtpScreen(phoneNumber: phoneNumber),
-                              ),
-                            );
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Please enter a valid phone number"),
-                              ),
-                            );
-                          }
-                        },
+                        onPressed: loading ? null : verifyPhoneNumber,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF6A11CB),
                           foregroundColor: Colors.white,
@@ -152,7 +149,12 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                           ),
                           elevation: 5,
                         ),
-                        child: const Text('Next'),
+                        child: loading
+                            ? const CircularProgressIndicator(
+                          strokeWidth: 3,
+                          color: Colors.white,
+                        )
+                            : const Text('Next'),
                       ),
                     ],
                   ),
@@ -165,4 +167,3 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
     );
   }
 }
-

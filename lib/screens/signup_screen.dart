@@ -86,6 +86,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           child: Column(
             children: [
+              SizedBox(height: srcheight*0.18,),
               Center(
                 child: SingleChildScrollView(
                   child: Padding(

@@ -13,6 +13,12 @@ class FileUploadPage extends StatefulWidget {
 class _FileUploadPageState extends State<FileUploadPage> {
   PlatformFile? pickedFile;
 
+  Future<void> uploadFile() async{
+    final path = 'files/${pickedFile!.name}';
+    final file = File(pickedFile!.name!);
+    final ref= FirebaseStorage.instance.ref().child(path);
+    ref.putFile(file);
+  }
 
   Future<void> selectFile() async {
     final result = await FilePicker.platform.pickFiles();

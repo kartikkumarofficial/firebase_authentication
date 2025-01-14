@@ -43,6 +43,7 @@ dependencies:
   http: ^1.2.2
   get: ^4.6.6
   google_sign_in: ^6.2.2
+  firebase_database: ^11.3.0
 
 
 dev_dependencies:

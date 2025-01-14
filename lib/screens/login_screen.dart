@@ -1,3 +1,4 @@
+import 'package:firebase_authentication/database/firestore_list_screen.dart';
 import 'package:firebase_authentication/screens/home_screen.dart';
 import 'package:firebase_authentication/screens/signup_screen.dart';
 import 'package:firebase_authentication/widgets/utils.dart';
@@ -42,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen>{
         password: passwordController.text.toString()).then((value) {
       Utils().gtoastMessage("Welcome ${value.user!.email.toString()}");
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomeScreen(),));
+          context, MaterialPageRoute(builder: (context) => FireStoreScreen(),));
       setState(() {
         loading = false;
       });

@@ -1,8 +1,12 @@
 import 'package:firebase_authentication/screens/home_screen.dart';
 import 'package:firebase_authentication/screens/login_with_phone_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_authentication/screens/login_screen.dart';
+import 'package:firebase_authentication/services/google_sign_in.dart';
 
 class BottomSheetOpener {
+  final GoogleSignInProvider _googleSignInProvider = GoogleSignInProvider();
+
   void showBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -34,9 +38,17 @@ class BottomSheetOpener {
               ListTile(
                 leading: Icon(Icons.g_mobiledata),
                 title: Text("Continue with Google"),
-                onTap: () {
-                  Navigator.pop(context); // Close the bottom sheet
-                  print("Continue with Google selected");
+                onTap: () async {
+                  final user = await _googleSignInProvider.signInWithGoogle();
+                  if (user != null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Signed in as ${user.displayName}')),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Sign-in failed')),
+                    );
+                  }
                 },
               ),
             ],

@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/utils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_authentication/widgets/bottomsheet_auth.dart';
+import 'package:firebase_authentication/services/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen>{
   final _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
   final _auth = FirebaseAuth.instance ;
+  final GoogleSignInProvider _googleSignInProvider = GoogleSignInProvider();
 
   @override
   void dispose() {
@@ -283,7 +285,7 @@ class _LoginScreenState extends State<LoginScreen>{
                                 children: [
                                   GestureDetector(
                                     onTap: (){
-                                      Utils().toastMessage('message');
+                                      // Utils().toastMessage('message');
                                       // Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()),);
 
                                       BottomSheetOpener().showBottomSheet(context);

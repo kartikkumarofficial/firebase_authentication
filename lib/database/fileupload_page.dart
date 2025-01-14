@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
 
-
-class text_Storing_page extends StatefulWidget {
-  const text_Storing_page({super.key});
+class FileUploadPage extends StatefulWidget {
+  const FileUploadPage({super.key});
 
   @override
-  State<text_Storing_page> createState() => _text_Storing_pageState();
+  State<FileUploadPage> createState() => _FileUploadPageState();
 }
 
-class _text_Storing_pageState extends State<text_Storing_page> {
-  final textController = TextEditingController();
+class _FileUploadPageState extends State<FileUploadPage> {
+  PlatformFile? pickedFile;
+
+
+  Future<void> selectFile() async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result==null) return;
+  setState(() {
+    pickedFile=result.files.first;
+  });
+  }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +35,7 @@ class _text_Storing_pageState extends State<text_Storing_page> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Store text',
+          'File Upload',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -47,36 +60,19 @@ class _text_Storing_pageState extends State<text_Storing_page> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Text Field
-                TextField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: 'Enter something...',
-                    hintStyle: TextStyle(color: Colors.grey[600]),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(srcwidth * 0.04),
-                      borderSide: BorderSide.none,
-                    ),
-                    contentPadding: EdgeInsets.symmetric(
-                        vertical: srcheight * 0.02, horizontal: srcwidth * 0.04),
-                    // boxShadow: [
-                    //   BoxShadow(
-                    //     color: Colors.grey.withOpacity(0.5),
-                    //     spreadRadius: 1,
-                    //     blurRadius: 5,
-                    //     offset: Offset(0, 3),
-                    //   ),
-                    // ],
-                  ),
-                ),
-                SizedBox(height: srcheight * 0.03),
-
-                // Store Button
+                if(pickedFile!=null)
+                  Expanded(
+                      child: Container(
+                        color: Colors.blue[100],
+                        child: Image.file(
+                          File(pickedFile!.path!),
+                          height: 100,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      )),
                 ElevatedButton(
-                  onPressed: () {
-                    // Implement your logic for storing text
-                  },
+                  onPressed: selectFile,
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(
                         horizontal: srcwidth * 0.15, vertical: srcheight * 0.015),
@@ -90,10 +86,39 @@ class _text_Storing_pageState extends State<text_Storing_page> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.text_fields, size: 28),
+                      const Icon(Icons.file_open, size: 28),
                       SizedBox(width: srcwidth * 0.03),
                       Text(
-                        "Store",
+                        "Select File",
+                        style: TextStyle(
+                          fontSize: textScaleFactor * 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: srcheight * 0.03),
+                ElevatedButton(
+                  onPressed: (){},
+                  // onPressed: uploadFile,
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: srcwidth * 0.15, vertical: srcheight * 0.015),
+                    backgroundColor: Colors.white,
+                    foregroundColor: const Color(0xFF6A11CB),
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(srcwidth * 0.04),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.cloud_upload, size: 28),
+                      SizedBox(width: srcwidth * 0.03),
+                      Text(
+                        "Upload File",
                         style: TextStyle(
                           fontSize: textScaleFactor * 18,
                           fontWeight: FontWeight.bold,
@@ -110,5 +135,3 @@ class _text_Storing_pageState extends State<text_Storing_page> {
     );
   }
 }
-
-

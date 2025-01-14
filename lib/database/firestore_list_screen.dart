@@ -1,4 +1,5 @@
-import 'package:firebase_authentication/screens/text_store..dart';
+import 'package:firebase_authentication/database/fileupload_page.dart';
+import 'package:firebase_authentication/database/text_store..dart';
 import 'package:flutter/material.dart ';
 import 'package:firebase_authentication/database/firestore_list_screen.dart';
 import 'package:firebase_authentication/screens/home_screen.dart';
@@ -114,7 +115,7 @@ class _FireStoreScreenState extends State<FireStoreScreen> {
                 // Button to Store Image
                 ElevatedButton(
                   onPressed: () {
-                    // Implement your logic for storing images
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => FileUploadPage(),));
                   },
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(

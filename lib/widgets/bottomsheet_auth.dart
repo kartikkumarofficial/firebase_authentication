@@ -1,3 +1,4 @@
+import 'package:firebase_authentication/database/firestore_list_screen.dart';
 import 'package:firebase_authentication/screens/home_screen.dart';
 import 'package:firebase_authentication/screens/login_with_phone_screen.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,7 @@ class BottomSheetOpener {
                 onTap: () async {
                   final user = await _googleSignInProvider.signInWithGoogle();
                   if (user != null) {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => FireStoreScreen(),));
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Signed in as ${user.displayName}')),
                     );

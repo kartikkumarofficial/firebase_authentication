@@ -1,16 +1,13 @@
-# firebase_authentication
+This is a Flutter app integrated with Firebase Authentication for secure user authentication, including Email/Password login, Phone Number login (OTP-based), and Google Sign-In. The app also allows users to upload data using Firestore for persistent storage.
 
-A new Flutter project.
+<h1>Outputs</h1>
+<img src="Outputs/1.jpg" height="500" width="200">
+<img src="Outputs/2.jpg" height="500" width="200">
+<img src="Outputs/3.jpg" height="500" width="200">
+<img src="Outputs/4.jpg" height="500" width="200">
+<img src="Outputs/5.jpg" height="500" width="200">
+<img src="Outputs/6.jpg" height="500" width="200">
+<img src="Outputs/7.jpg" height="500" width="200">
+<img src="Outputs/8.jpg" height="500" width="200">
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

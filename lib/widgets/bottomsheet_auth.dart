@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:firebase_authentication/database/firestore_list_screen.dart';
 import 'package:firebase_authentication/screens/home_screen.dart';
 import 'package:firebase_authentication/screens/login_with_phone_screen.dart';
+import 'package:firebase_authentication/widgets/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_authentication/screens/login_screen.dart';
 import 'package:firebase_authentication/services/google_sign_in.dart';
@@ -47,6 +50,7 @@ class BottomSheetOpener {
                       SnackBar(content: Text('Signed in as ${user.displayName}')),
                     );
                   } else {
+                    Utils().toastMessage(e.toString());
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Sign-in failed')),
                     );

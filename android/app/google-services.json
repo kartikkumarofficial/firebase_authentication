@@ -12,7 +12,20 @@
           "package_name": "com.example.authentication_firebase"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "361998355281-svsrjmkg4bo4291t9av3leaa5a4tk8eg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.authentication_firebase",
+            "certificate_hash": "f74eb5a3d9b0836a115a07fc57f2c9f2bb837a6a"
+          }
+        },
+        {
+          "client_id": "361998355281-o35fdh2kk7ak7k3tsndrrsudklksq3gm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAgOx4TcFh9A5mQAXAEw50Ox8OVHYG9JB0"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361998355281-o35fdh2kk7ak7k3tsndrrsudklksq3gm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "361998355281-ss14quqksb17l2tnso0f29jnv350o7jl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.firebaseAuthentication"
+              }
+            }
+          ]
         }
       }
     },
@@ -31,7 +56,12 @@
           "package_name": "com.example.firebase_authentication"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "361998355281-o35fdh2kk7ak7k3tsndrrsudklksq3gm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAgOx4TcFh9A5mQAXAEw50Ox8OVHYG9JB0"
@@ -39,7 +69,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361998355281-o35fdh2kk7ak7k3tsndrrsudklksq3gm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "361998355281-ss14quqksb17l2tnso0f29jnv350o7jl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.firebaseAuthentication"
+              }
+            }
+          ]
         }
       }
     }

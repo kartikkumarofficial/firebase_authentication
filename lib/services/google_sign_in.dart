@@ -23,7 +23,7 @@ class GoogleSignInProvider {
       final UserCredential userCredential = await _auth.signInWithCredential(credential);
       return userCredential.user;
     } catch (e) {
-      print(e.toString());
+      print("Error =======================================================================  $e");
       return null;
     }
   }

@@ -10,7 +10,7 @@ class GoogleSignInProvider {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
       if (googleUser == null) {
-        return null; // if user cancels the sign in
+        return null;
       }
 
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
